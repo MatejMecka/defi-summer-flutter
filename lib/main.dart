@@ -1,3 +1,4 @@
+import 'package:defi_summer/screens/intro.dart';
 import 'package:flutter/material.dart';
 import 'screens/pick_account.dart';
 import 'screens/show_account.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PickAccountPage(),
+      home: IntroPage(),
      // home: SendMoneyPage(),
     );
   }

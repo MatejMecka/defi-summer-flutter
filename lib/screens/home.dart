@@ -1,3 +1,5 @@
+import 'package:defi_summer/screens/dashboard.dart';
+import 'package:defi_summer/screens/send_money.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -14,9 +16,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  List<Widget> pages = [DashboardPage(), SendMoneyPage(), ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex:
             _currentIndex, // this will be set when a new tab is tapped
@@ -29,6 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: new Icon(Icons.explore),
             label: 'Pay',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.explore),
+            label: 'Request Payment',
           ),
         ],
     ),

@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:stellar_flutter_sdk/stellar_flutter_sdk.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'dashboard.dart';
 
@@ -10,7 +11,8 @@ class NewAccountPage extends StatefulWidget {
 }
 
 class _NewAccountPageState extends State<NewAccountPage> {
-  
+
+  final storage = new FlutterSecureStorage();
   KeyPair keyPair = KeyPair.random();
 
   @override
@@ -33,7 +35,8 @@ class _NewAccountPageState extends State<NewAccountPage> {
             Text("Take Note of this, if you lose them you will no longer have acccess to your funds..."),
             SizedBox(height: 5.0),
             ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+                await storage.write(key: "secret_key", value: keyPair.secretSeed);
                 Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => DashboardPage()),

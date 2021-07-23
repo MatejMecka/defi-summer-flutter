@@ -1,3 +1,4 @@
+import 'package:defi_summer/screens/qr_scanner.dart';
 import 'package:flutter/material.dart';
 //import 'package:ai_barcode/ai_barcode.dart';
 
@@ -22,10 +23,23 @@ class _PickAddressState extends State<PickAddressPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                        Icon(
-                          Icons.qr_code,
-                        ),
-                        Text("Scan Address")
+                        GestureDetector(
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.qr_code,
+                              ),
+                              Text("Scan Address")
+                            ],
+                          ),
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => QRViewExample()),
+                            );            
+                          }
+                        )
+                        
                         ] 
                       )
                     ),  // Also Including Tab-bar height.
