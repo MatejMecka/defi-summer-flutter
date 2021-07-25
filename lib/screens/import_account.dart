@@ -1,38 +1,20 @@
-/// Flutter code sample for TextFormField
-
-// This example shows how to move the focus to the next field when the user
-// presses the SPACE key.
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-void main() => runApp(const MyApp());
+import 'components/key_validator.dart';
 
-/// This is the main application widget.
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Flutter Code Sample';
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
-  }
-}
 
 /// This is the stateful widget that the main application instantiates.
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
+class ImportAccountPage extends StatefulWidget {
 
   @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+  State<ImportAccountPage> createState() => _ImportAccountPageState();
 }
 
 /// This is the private State class that goes with MyStatefulWidget.
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _ImportAccountPageState extends State<ImportAccountPage> {
+  final storage = new FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -53,7 +35,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           labelText: 'SXXXXXX.....',
                         ),
                         onSaved: (String? value) async {
-                          print('Value for field saved as "$value"');
+                          if(validateKey(value, false)){
+                            await storage.write(key: "secret_key", value: value);
+                            print('Value for field saved as "$value"');
+                          } else {
+
+                          }
+                          
                         },
                     ),
                     )

@@ -1,4 +1,5 @@
 import 'package:defi_summer/models/Asset.dart';
+import 'package:defi_summer/models/Transaction.dart';
 import 'package:flutter/material.dart';
 import 'components/transaction-card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -10,11 +11,13 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   late Future<List<Asset>> futureAssets;
+  late Future<List<Transaction>> futureTransaction;
 
   @override
   void initState(){
     super.initState();
     futureAssets = fetchAsset('GB4UNJKTNGKTXRVLFX73LMZFKCPADZNPNZDE25IX6H2U5RYGJC2J3DCP');
+    futureTransaction = fetchTransactions('GB4UNJKTNGKTXRVLFX73LMZFKCPADZNPNZDE25IX6H2U5RYGJC2J3DCP');
   }
 
   @override
@@ -23,27 +26,27 @@ class _DashboardPageState extends State<DashboardPage> {
       body: ListView(
       children: [
           Text("Current Assets"),
-          FractionallySizedBox(
-            alignment: Alignment.topCenter,
-            widthFactor: 1,
-            //heightFactor: infinity / 2,
-            child: Container(
-              height: 100,
-              color: Colors.blue,
-          ),
-        ),
-
           FutureBuilder(
             future: futureAssets,
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.hasData) {
-                /*
-                CarouselSlider(
-                  options: CarouselOptions(height: 400.0),
-                  //items: snapshot.data!,
-                );*/
-                print(snapshot.data);
-                return Text('loaded');
+            builder: (BuildContext context, AsyncSnapshot<List<Asset>> snapshot) {
+              if (snapshot.hasData) {              
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: ListTile(
+                    leading: Image.network(
+                      snapshot.data![index].image
+                    ),
+                    title: Text(snapshot.data![index].assetCode, style: TextStyle(fontWeight: FontWeight.bold),),
+                    subtitle: Text(snapshot.data![index].balance)
+                  )
+                );
+                },
+            );
+                //print(snapshot.data!.length);
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
@@ -54,9 +57,29 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           Divider(),
           Text("Transactions"),
-          Container(
-            child: TransactionCard(),
-          )
+          FutureBuilder(
+            future: futureTransaction,
+            builder: (BuildContext context, AsyncSnapshot<List<Transaction>> snapshot) {
+            if (snapshot.hasData) {              
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: TransactionCard(transaction: snapshot.data![index],)
+                  );
+                },
+              );
+                //print(snapshot.data!.length);
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              // By default, show a loading spinner.
+              return CircularProgressIndicator();
+                  
+            },
+          ),
         ]
        ),
        floatingActionButton: FloatingActionButton(

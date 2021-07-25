@@ -1,6 +1,10 @@
+import 'package:defi_summer/models/Transaction.dart';
 import 'package:flutter/material.dart';
 
 class TransactionCard extends StatefulWidget {
+  TransactionCard({Key? key, required this.transaction}): super(key: key);
+
+  Transaction transaction;
 
   @override
   _TransactionCardState createState() => _TransactionCardState();
@@ -14,10 +18,17 @@ class _TransactionCardState extends State<TransactionCard> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                const ListTile(
-                  leading: Text("+50\nXLM", textAlign: TextAlign.center, style: TextStyle(color: Colors.green)),
-                  title: Text('Transaction Recived!', textAlign: TextAlign.center, style: TextStyle(color: Colors.green)),
-                  subtitle: Text('You have received 50 XLM on 05.07.2021', textAlign: TextAlign.center, style: TextStyle(color: Colors.green)),
+                ListTile(
+                  leading: Text("${widget.transaction.balance} \n ${widget.transaction.assetCode}", textAlign: TextAlign.center, 
+                  style: TextStyle(
+                    color: widget.transaction.isSender ? Colors.red : Colors.green)
+                  ),
+                  title: Text('Transaction Recived!', textAlign: TextAlign.center, style: 
+                  TextStyle(
+                    color: widget.transaction.isSender ? Colors.red : Colors.green
+                    )
+                  ),
+                  subtitle: Text('You have ${widget.transaction.isSender ? "sent" : "received"} ${widget.transaction.balance} ${widget.transaction.assetCode} on ${widget.transaction.created}', textAlign: TextAlign.center, style: TextStyle(color: Colors.green)),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

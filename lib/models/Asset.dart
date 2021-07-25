@@ -33,7 +33,7 @@ Future<List<Asset>> fetchAsset(account) async {
     // then parse the JSON.
     List<Asset> assets = [];
     print(response.body);
-    json.decode(response.body).forEach((elem){
+    jsonDecode(response.body).forEach((elem){
       assets.add(Asset.fromJson(elem));
     });
     return assets;

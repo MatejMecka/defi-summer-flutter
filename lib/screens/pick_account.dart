@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'import_account.dart';
 import 'new_account.dart';
 
 class PickAccountPage extends StatefulWidget {
@@ -31,6 +32,7 @@ class _PickAccountPageState extends State<PickAccountPage> {
           ElevatedButton(
             onPressed: () {
                 // Respond to button press
+                  return ImportAccountPage();
             },
             child: Text('Import existing account'),
           )
