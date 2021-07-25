@@ -32,7 +32,7 @@ class _PickAccountPageState extends State<PickAccountPage> {
           ElevatedButton(
             onPressed: () {
                 // Respond to button press
-                  return ImportAccountPage();
+                  //return ImportAccountPage();
             },
             child: Text('Import existing account'),
           )

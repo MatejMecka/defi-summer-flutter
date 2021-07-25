@@ -40,6 +40,7 @@ dependencies:
   path: any
   qr_code_scanner: ^0.5.2
   local_auth: ^1.1.6
+  firebase_messaging: "^10.0.4"
 
 
 dev_dependencies:
